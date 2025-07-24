@@ -1,25 +1,60 @@
 <% layout("/layouts/boilerplate") %>
 
 <body>
-    <h3>All Listings</h3>
-    <form method="GET" action="/listings/new">
-    </form>
+  <div class="container mt-4">
+    <h3 class="mb-4 text-center">All Listings</h3>
 
-    <div class="container">
-        <!-- Row with 4 cards in each row -->
-   
-
-            <% for (let listing of allListings) { %> 
-            
-                <div class="card" style="width: 18rem;">
-  <img src="<%=listing.image %>" class="card-img-top" alt="listing_image">
-  <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-  </div>
-</div>
-            <% } %>
-
-        </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <% for (let listing of allListings) { %>
+        <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+          <div class="card h-100 shadow-sm listing-card">
+            <div class="card-img-wrapper position-relative">
+              <img src="<%=listing.image%>" class="card-img-top" alt="<%= listing.title %>">
+              <div class="img-overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center">
+                <h5 class="overlay-text text-white text-center px-2"><%= listing.title %></h5>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="card-text"><%= listing.description %></p>
+              <p class="card-text text-muted mb-1">
+                <strong>Price:</strong> 
+                <%= new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(listing.price) %>
+              </p>
+              <p class="card-text text-muted">
+                <%= listing.location %>, <%= listing.country %>
+              </p>
+            </div>
+          </div>
+        </a>
+      <% } %>
     </div>
+  </div>
 
+  <style>
+    .card-img-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .img-overlay {
+      background: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card-img-wrapper:hover .img-overlay {
+      opacity: 1;
+    }
+
+    .overlay-text {
+      font-weight: 600;
+      font-size: 1.5rem;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    }
+
+    a.text-decoration-none:hover {
+      text-decoration: none;
+    }
+  </style>
 </body>

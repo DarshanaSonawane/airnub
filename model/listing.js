@@ -11,7 +11,7 @@ set:(v)=>v===""? "https://images.unsplash.com/photo-1751378639381-e482ae167e39?q
     description:String,
     image:String,
     price:Number,
-    localtion:String,
+    location:String,
     country:String,
 
 });
